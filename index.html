@@ -54,7 +54,15 @@ document.getElementById("chapterSelect").addEventListener("change", e=>{
 });
 
 loadChapters();
-</script>
+ 
+<div class="nav">
+  <button onclick="prevChap()">Prev</button>
+  <div id="title"></div>
+  <button onclick="nextChap()">Next</button>
+</div>
 
+<div id="container"></div>
+
+<script src="script.js">
 </body>
 </html>
