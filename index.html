@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Komik Reader Multi-Chapter Scroll</title>
+<style>
+ body { background:#111; margin:0; font-family:Arial; color:white; }
+ img { width:100%; display:block; margin:0; }
+ #content { margin-bottom:50px; }
+ select { padding:8px; margin:15px; font-size:16px; }
+</style>
+</head>
+<body>
+
+<select id="chapterSelect"></select>
+
+<div id="content"></div>
+
+<script>
+const MAX_CHAPTERS = 24;
+const MAX_PAGES = 999;
+
+// detect existing chapter folders
+async function loadChapters() {
+    const sel = document.getElementById("chapterSelect");
+    for (let i=1; i<=MAX_CHAPTERS; i++){
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = "Chapter " + i;
+        sel.appendChild(opt);
+    }
+    loadChapter(1);
+}
+
+function loadChapter(num){
+    const content = document.getElementById("content");
+    content.innerHTML = "";
+    const base = "chapters/chap_" + num + "/";
+
+    for (let i=1; i<=MAX_PAGES; i++){
+        let numStr = String(i).padStart(2,'0');
+        const el = document.createElement("img");
+        el.src = base + numStr + ".jpg";
+        el.loading = "lazy";
+        el.onerror = function(){ this.remove(); };
+        content.appendChild(el);
+    }
+}
+
+document.getElementById("chapterSelect").addEventListener("change", e=>{
+    loadChapter(e.target.value);
+});
+
+loadChapters();
+</script>
+
+</body>
+</html>
